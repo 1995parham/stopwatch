@@ -13,6 +13,7 @@ export class AppComponent {
   public delta: Date = new Date(0);
 
   constructor() {
+    this.shift = 0;
   }
 
   private update(): void {
@@ -22,14 +23,21 @@ export class AppComponent {
   ngOnInit() {
   }
 
+  /**
+   * start starts the timer by registering it.
+   * it changes since parameter.
+   */
   public start(): void {
     this.since = performance.now();
 
     this.timerID = window.setInterval(
-      this.update.bind(this), 100
-    ); // each 100ms updates UI
+      this.update.bind(this), 10
+    ); // each 10 ms updates the time difference.
   }
 
+  /**
+   * stop stops timer and saves its last value
+   */
   public stop(): void {
     if (this.timerID) {
       window.clearInterval(this.timerID);
@@ -37,6 +45,9 @@ export class AppComponent {
     this.shift = this.delta.getTime();
   }
 
+  /**
+   * reset resets all parameters to zero
+   */
   public reset(): void {
     this.stop();
     this.delta = new Date(0);

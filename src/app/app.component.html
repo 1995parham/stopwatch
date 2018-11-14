@@ -17,11 +17,11 @@
   </div>
   <div class="row">
     <div class="col">
-      <div class="btn-group btn-group-lg" role="group">
-        <button (click)="start()" type="button" class="btn btn-secondary">Start</button>
-        <button (click)="stop()" type="button" class="btn btn-secondary">Stop</button>
-        <button (click)="reset()" type="button" class="btn btn-secondary">Reset</button>
+      <div class="btn-group btn-group-lg btn-group-trigger" role="group">
+        <button (click)="start()" type="button" [class.active]="active" class="btn btn-secondary">Start</button>
+        <button (click)="stop()" type="button" [class.active]="!active" class="btn btn-secondary">Stop</button>
       </div>
+      <button (click)="reset()" type="button" class="btn btn-lg btn-warning">Reset</button>
     </div>
   </div>
 </div>

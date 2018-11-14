@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { interval, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +10,14 @@ import { Component } from '@angular/core';
 export class AppComponent {
   private since: number;
   private shift: number;
-  private timerID: number;
+  private stop$: Subject<boolean> = new Subject<boolean>();
 
   public delta: Date = new Date(0);
+  public active: boolean;
 
   constructor() {
     this.shift = 0;
-    this.timerID = null;
+    this.active = false;
   }
 
   private update(): void {
@@ -29,14 +32,17 @@ export class AppComponent {
    * it changes since parameter.
    */
   public start(): void {
-    // do noting if the timer is in the running state
-    if (this.timerID) {
+    // do nothing if the timer is in the running state
+    if (this.active) {
       return;
     }
+    // changes timer state to running
+    this.active = true;
+
     this.since = performance.now();
 
-    this.timerID = window.setInterval(
-      this.update.bind(this), 10
+    interval(10).pipe(takeUntil(this.stop$)).subscribe(
+      () => this.update()
     ); // each 10 ms updates the time difference.
   }
 
@@ -44,10 +50,8 @@ export class AppComponent {
    * stop stops timer and saves its last value
    */
   public stop(): void {
-    if (this.timerID) {
-      window.clearInterval(this.timerID);
-    }
-    this.timerID = null;
+    this.stop$.next(true);
+    this.active = false;
     this.shift = this.delta.getTime();
   }
 

@@ -28,7 +28,6 @@ export class AppComponent {
     ); // each 100ms updates UI
   }
 
-
   public stop(): void {
     if (this.timerID) {
       window.clearInterval(this.timerID);

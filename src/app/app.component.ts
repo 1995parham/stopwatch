@@ -14,6 +14,7 @@ export class AppComponent {
 
   constructor() {
     this.shift = 0;
+    this.timerID = null;
   }
 
   private update(): void {
@@ -28,6 +29,10 @@ export class AppComponent {
    * it changes since parameter.
    */
   public start(): void {
+    // do noting if the timer is in the running state
+    if (this.timerID) {
+      return;
+    }
     this.since = performance.now();
 
     this.timerID = window.setInterval(
@@ -42,6 +47,7 @@ export class AppComponent {
     if (this.timerID) {
       window.clearInterval(this.timerID);
     }
+    this.timerID = null;
     this.shift = this.delta.getTime();
   }
 

@@ -7,14 +7,16 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   private since: number;
+  private shift: number;
   private timerID: number;
+
   public delta: Date = new Date(0);
 
   constructor() {
   }
 
   private update(): void {
-    this.delta = new Date(performance.now() - this.since);
+    this.delta = new Date(performance.now() - this.since + this.shift);
   }
 
   ngOnInit() {
@@ -32,10 +34,12 @@ export class AppComponent {
     if (this.timerID) {
       window.clearInterval(this.timerID);
     }
+    this.shift = this.delta.getTime();
   }
 
   public reset(): void {
     this.stop();
     this.delta = new Date(0);
+    this.shift = 0;
   }
 }

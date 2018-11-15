@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
 import { interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -25,6 +25,22 @@ export class AppComponent {
   }
 
   ngOnInit() {
+  }
+
+  /**
+   * prevents page from refreshing when user have unsaved data.
+   */
+  @HostListener('window:beforeunload', ['$event'])
+  public unloadNotification($event: any) {
+    if (!this.active && this.shift === 0) {
+      return undefined;
+    }
+
+    var confirmationMessage = 'It looks like you have been editing something. '
+      + 'If you leave before saving, your changes will be lost.';
+
+    ($event || window.event).returnValue = confirmationMessage; //Gecko + IE
+    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
   }
 
   /**

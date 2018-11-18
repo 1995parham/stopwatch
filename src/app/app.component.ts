@@ -28,6 +28,19 @@ export class AppComponent {
   }
 
   /**
+   * handles space event to stop/start the timer with ease
+   */
+  @HostListener('window:keyup.space', ['$event'])
+  public spaceHandler($event: any) {
+    if (!this.active) {
+      this.start();
+    } else {
+      this.stop();
+    }
+  }
+
+
+  /**
    * prevents page from refreshing when user have unsaved data.
    */
   @HostListener('window:beforeunload', ['$event'])

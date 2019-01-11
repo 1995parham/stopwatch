@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --base-href '/stopwatch/' && npx ngh --dir=dist/stopwatch",
+    "build": "ng build",
+    "publish": "ng build --prod --base-href '/stopwatch/' && npx ngh --dir=dist/stopwatch",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

@@ -3,6 +3,11 @@ kind: pipeline
 name: default
 
 steps:
+  - name: lint
+    image: node
+    commands:
+      - npm install
+      - npm run lint
   - name: build
     image: node
     environment:

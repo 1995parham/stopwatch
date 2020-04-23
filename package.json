@@ -5,7 +5,7 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "publish": "ng build --prod --base-href '/stopwatch/' && npx ngh --dir=dist/stopwatch",
+    "publish": "ng build --prod --base-href '/stopwatch/' && npx ngh --dir=dist/stopwatch --repo=https://GH_TOKEN@github.com/1995parham/stopwatch --name='Parham Alvani' --email=parham.alvani@gmail.com -S",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

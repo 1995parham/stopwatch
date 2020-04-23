@@ -24,9 +24,6 @@ export class AppComponent {
     this.delta = new Date(performance.now() - this.since + this.shift);
   }
 
-  ngOnInit() {
-  }
-
   /**
    * handles space event to stop/start the timer with ease
    */
@@ -49,11 +46,11 @@ export class AppComponent {
       return undefined;
     }
 
-    var confirmationMessage = 'It looks like you have been editing something. '
+    const confirmationMessage = 'It looks like you have been editing something. '
       + 'If you leave before saving, your changes will be lost.';
 
-    ($event || window.event).returnValue = confirmationMessage; //Gecko + IE
-    return confirmationMessage; //Gecko + Webkit, Safari, Chrome etc.
+    ($event || window.event).returnValue = confirmationMessage; // Gecko + IE
+    return confirmationMessage; // Gecko + Webkit, Safari, Chrome etc.
   }
 
   /**

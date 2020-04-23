@@ -49,8 +49,7 @@ export class AppComponent {
     const confirmationMessage = 'It looks like you have been editing something. '
       + 'If you leave before saving, your changes will be lost.';
 
-    ($event || window.event).returnValue = confirmationMessage; // Gecko + IE
-    return confirmationMessage; // Gecko + Webkit, Safari, Chrome etc.
+    return confirmationMessage;
   }
 
   /**

@@ -9,19 +9,19 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class AppComponent {
   private since: number;
-  private shift: number;
+  private offset: number;
   private stop$: Subject<boolean> = new Subject<boolean>();
 
   public delta: Date = new Date(0);
   public active: boolean;
 
   constructor() {
-    this.shift = 0;
+    this.offset = 0;
     this.active = false;
   }
 
   private update(): void {
-    this.delta = new Date(performance.now() - this.since + this.shift);
+    this.delta = new Date(performance.now() - this.since + this.offset);
   }
 
   /**
@@ -41,15 +41,15 @@ export class AppComponent {
    * prevents page from refreshing when user have unsaved data.
    */
   @HostListener('window:beforeunload', ['$event'])
-  public unloadNotification($event: any) {
-    if (!this.active && this.shift === 0) {
-      return undefined;
+  public unloadNotification(event: any) {
+    event.preventDefault();
+
+    if (!this.active && this.offset === 0) {
+      return;
     }
 
-    const confirmationMessage = 'It looks like you have been editing something. '
+    event.returnValue = 'It looks like you have been editing something. '
       + 'If you leave before saving, your changes will be lost.';
-
-    return confirmationMessage;
   }
 
   /**
@@ -77,7 +77,7 @@ export class AppComponent {
   public stop(): void {
     this.stop$.next(true);
     this.active = false;
-    this.shift = this.delta.getTime();
+    this.offset = this.delta.getTime();
   }
 
   /**
@@ -86,6 +86,6 @@ export class AppComponent {
   public reset(): void {
     this.stop();
     this.delta = new Date(0);
-    this.shift = 0;
+    this.offset = 0;
   }
 }
